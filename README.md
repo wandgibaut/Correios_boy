@@ -16,7 +16,7 @@ Ex:
 
 $ python3 correios.py (Linux)
 
-O repositório contém ainda um [ambiente virtual](https://docs.python.org/3/library/venv.html) já contendo o Selenium.
+O repositório contém ainda um [ambiente virtual](https://docs.python.org/3/library/venv.html) já com o Selenium.
 
 ## Requisitos
 * Python 3
