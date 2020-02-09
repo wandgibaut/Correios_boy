@@ -1,6 +1,6 @@
 # Correios_boy
 
-Um programa simples baseado no [Selenium](https://selenium.dev/) para verificar o status de encomendas no site dos correios.
+Um programa simples baseado no [Selenium](https://selenium.dev/) para verificar o status de encomendas no site dos [Correios](https://www2.correios.com.br/sistemas/rastreamento/resultado.cfm).
 
 
 ## Uso
