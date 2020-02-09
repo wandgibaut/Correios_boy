@@ -2,7 +2,7 @@ from selenium import webdriver
 import json
 
 chrome = webdriver.Chrome()
-filepath = 'encomentas.txt'
+filepath = 'encomendas.txt'
 
 chrome.get('https://www2.correios.com.br/sistemas/rastreamento/resultado.cfm')
 textarea = chrome.find_element_by_tag_name('textarea')
