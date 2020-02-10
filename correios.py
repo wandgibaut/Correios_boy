@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException 
 import json
 
 chrome = webdriver.Chrome()
@@ -42,24 +43,47 @@ for encomenda in encomendas:
 btnPesq.click()
 chrome.implicitly_wait(2)
 
-answers = chrome.find_element_by_xpath('//*[@id="sroFormMultiResultado"]/table/tbody')
+# if the list has multiple elements
+try:
+    answers = chrome.find_element_by_xpath('//*[@id="sroFormMultiResultado"]/table/tbody')
+    entrySetAnswer = answers.find_elements_by_tag_name('tr')
+    objectArr = []
+    for element in entrySetAnswer:
+        entrySetInfo = element.find_elements_by_tag_name('td')
+        correioObject = {
+            "Objeto": entrySetInfo[0].text,
+            "Info": entrySetInfo[1].text,
+            "TimeStamp": entrySetInfo[2].text,
+        }
+        objectArr.append(correioObject)
 
-entrySetAnswer = answers.find_elements_by_tag_name('tr')
-objectArr = []
-for element in entrySetAnswer:
-    entrySetInfo = element.find_elements_by_tag_name('td')
-    correioObject = {
-        "Objeto": entrySetInfo[0].text,
-        "Info": entrySetInfo[1].text,
-        "TimeStamp": entrySetInfo[2].text,
-    }
-    objectArr.append(correioObject)
+    for i in objectArr:
+        print(i['Objeto'])
+        print(i['Info'])
+        print(i['TimeStamp']) 
+        print('')
 
-for i in objectArr:
-    print(i['Objeto'])
-    print(i['Info'])
-    print(i['TimeStamp']) 
-    print('')
+    chrome.close()
+    print ('done!')
 
-chrome.close()
-print ('done!')
+#otherwise, the page structure will be different
+except:
+    try:
+        answers = chrome.find_element_by_xpath('/html/body/div[1]/div[3]/div[2]/div/div/div[2]/div[2]/div[4]/table[1]/tbody')
+        entrySetInfo = answers.find_element_by_tag_name('tr').find_elements_by_tag_name('td')
+        correioObject = {
+            "TimeStamp": entrySetInfo[0].text,
+            "Info": entrySetInfo[1].text
+        }
+
+        print(correioObject['TimeStamp']) 
+        print(correioObject['Info'])
+        print('')
+
+        chrome.close()
+        print ('done!')
+
+    except:
+        raise Exception("Something is wrong!")
+
+
